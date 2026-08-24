@@ -110,7 +110,6 @@ public class ShiroAccessControl
         )
         .setSession(
             new LoginResponseTO.Session()
-                .setSessionId(subject.getSession().getId().toString())
                 .setCreationTime(creationTime)
                 .setExpirationTime(lastTimeAccess.plusMillis(subject.getSession().getTimeout()))
         );

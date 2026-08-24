@@ -87,9 +87,6 @@ components:
         session:
           type: object
           properties:
-            sessionId:
-              description: The ID of the user's current session.
-              type: string
             creationTime:
               description: The time the session was created.
               type: string
@@ -99,7 +96,6 @@ components:
               type: string
               format: date-time
           required:
-            - sessionId
             - creationTime
             - expirationTime
     UserPermission:

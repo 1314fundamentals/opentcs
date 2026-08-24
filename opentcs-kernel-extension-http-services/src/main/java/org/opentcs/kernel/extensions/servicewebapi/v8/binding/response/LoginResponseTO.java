@@ -51,8 +51,6 @@ public class LoginResponseTO {
   @JsonPropertyOrder(alphabetic = true)
   public static class Session {
     @Nonnull
-    private String sessionId;
-    @Nonnull
     private Instant creationTime;
     @Nonnull
     private Instant expirationTime;

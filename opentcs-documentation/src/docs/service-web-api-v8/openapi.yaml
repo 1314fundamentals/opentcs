@@ -19,7 +19,7 @@ info:
 
     By default, a client first needs to log in and acquire a session via [/login](#/Authentication/login) before accessing any other endpoints.
   # IMPORTANT: When updating this version number, remember to mention that in the changelog, too!
-  version: 8.0.0
+  version: 8.1.0
   title: openTCS web API specification v8
 servers:
   - url: http://localhost:55300/v8
