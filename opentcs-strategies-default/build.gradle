@@ -10,8 +10,8 @@ dependencies {
   api project(':opentcs-api-injection')
   api project(':opentcs-common')
 
-  implementation libs.jgrapht.core
-  implementation libs.jts.core
+  api libs.jgrapht.core
+  api libs.jts.core
 }
 
 tasks.register('release') {
