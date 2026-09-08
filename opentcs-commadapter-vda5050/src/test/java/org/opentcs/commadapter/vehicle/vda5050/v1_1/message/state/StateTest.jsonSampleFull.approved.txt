@@ -41,7 +41,37 @@
   } ],
   "driving" : true,
   "actionStates" : [ {
-    "actionId" : "some-action-id",
+    "actionId" : "some-action-id-waiting",
+    "actionStatus" : "WAITING",
+    "actionType" : "some-type",
+    "actionDescription" : "some-action-description",
+    "resultDescription" : "some-result-description"
+  }, {
+    "actionId" : "some-action-id-initializing",
+    "actionStatus" : "INITIALIZING",
+    "actionType" : "some-type",
+    "actionDescription" : "some-action-description",
+    "resultDescription" : "some-result-description"
+  }, {
+    "actionId" : "some-action-id-running",
+    "actionStatus" : "RUNNING",
+    "actionType" : "some-type",
+    "actionDescription" : "some-action-description",
+    "resultDescription" : "some-result-description"
+  }, {
+    "actionId" : "some-action-id-paused",
+    "actionStatus" : "PAUSED",
+    "actionType" : "some-type",
+    "actionDescription" : "some-action-description",
+    "resultDescription" : "some-result-description"
+  }, {
+    "actionId" : "some-action-id-finished",
+    "actionStatus" : "FINISHED",
+    "actionType" : "some-type",
+    "actionDescription" : "some-action-description",
+    "resultDescription" : "some-result-description"
+  }, {
+    "actionId" : "some-action-id-failed",
     "actionStatus" : "FAILED",
     "actionType" : "some-type",
     "actionDescription" : "some-action-description",

@@ -453,6 +453,7 @@
                             "WAITING",
                             "INITIALIZING",
                             "RUNNING",
+                            "PAUSED",
                             "FINISHED",
                             "FAILED"
                         ]

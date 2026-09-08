@@ -25,6 +25,11 @@ public enum ActionStatus {
   @JsonProperty(value = "RUNNING")
   RUNNING,
   /**
+   * Paused.
+   */
+  @JsonProperty(value = "PAUSED")
+  PAUSED,
+  /**
    * Finished.
    */
   @JsonProperty(value = "FINISHED")

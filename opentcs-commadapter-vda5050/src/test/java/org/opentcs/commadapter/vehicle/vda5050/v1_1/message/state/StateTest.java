@@ -163,7 +163,27 @@ public class StateTest {
         ),
         true,
         List.of(
-            new ActionState("some-action-id", ActionStatus.FAILED)
+            new ActionState("some-action-id-waiting", ActionStatus.WAITING)
+                .setActionType("some-type")
+                .setActionDescription("some-action-description")
+                .setResultDescription("some-result-description"),
+            new ActionState("some-action-id-initializing", ActionStatus.INITIALIZING)
+                .setActionType("some-type")
+                .setActionDescription("some-action-description")
+                .setResultDescription("some-result-description"),
+            new ActionState("some-action-id-running", ActionStatus.RUNNING)
+                .setActionType("some-type")
+                .setActionDescription("some-action-description")
+                .setResultDescription("some-result-description"),
+            new ActionState("some-action-id-paused", ActionStatus.PAUSED)
+                .setActionType("some-type")
+                .setActionDescription("some-action-description")
+                .setResultDescription("some-result-description"),
+            new ActionState("some-action-id-finished", ActionStatus.FINISHED)
+                .setActionType("some-type")
+                .setActionDescription("some-action-description")
+                .setResultDescription("some-result-description"),
+            new ActionState("some-action-id-failed", ActionStatus.FAILED)
                 .setActionType("some-type")
                 .setActionDescription("some-action-description")
                 .setResultDescription("some-result-description")
