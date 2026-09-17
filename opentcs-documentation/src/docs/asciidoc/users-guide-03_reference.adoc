@@ -48,7 +48,7 @@ openTCS consists of the following components running as separate processes and w
 
 * Kernel (server process), running vehicle-independent strategies and drivers for controlled vehicles
 * Clients
-** Model editor for modelling the plant model
+** Model editor for modeling the plant model
 ** Operations desk for visualizing the plant model during plant operation
 ** Kernel control center for controlling and monitoring the kernel, e.g. providing a detailed view of vehicles/their associated drivers
 ** Arbitrary clients for communicating with other systems, e.g. for process control or warehouse management
@@ -102,7 +102,7 @@ A point carries the following attributes:
    Indicates a position at which a vehicle may halt temporarily while processing an order, e.g. for executing an operation.
    The vehicle is expected to report in when it arrives at such a position.
    It may not remain here for longer than necessary, though.
-   Halt position is the default type for points when modelling with the model editor client.
+   Halt position is the default type for points when modeling with the model editor client.
 ** _Park position_:
    Indicates a position at which a vehicle may halt for longer periods of time when it is not processing orders.
    The vehicle is also expected to report in when it arrives at such a position.
@@ -279,7 +279,7 @@ A block has two relevant attributes:
 * A _type_, which determines the rules for entering a block:
 ** _Single vehicle only_:
    The resources aggregated in this block can only be used by a single vehicle at the same time.
-   This is the default type for blocks when modelling with the model editor client.
+   This is the default type for blocks when modeling with the model editor client.
 ** _Same direction only_:
    The resources aggregated in this block can be used by multiple vehicles at the same time, but only if they traverse the block in the same direction.
 
@@ -288,10 +288,20 @@ For the requested resources (usually a point and a path) the path is checked for
 The property's value may be an arbitrary character string (including the empty string).
 If there is no such property the path's name is being used as the direction.
 
-==== Layer
+==== Visual layout
+
+The visual layout describes attributes that are primarily relevant for the visual representation of the plant model.
+It provides the following attributes:
+
+* A scale for the X and Y axes.
+* A set of images that can be referenced, for example, as background images for layers.
+* A set of layers that can be used to group plant model elements -- see <<Layer>>.
+* A set of layer groups -- see <<Layer group>>.
+
+===== Layer
 
 Layers are abstract elements that group points, paths, locations and links.
-They can be useful for modelling complex plants and dividing plant sections into logical groups (e.g. floors in a multi-floor plant).
+They can be useful for modeling complex plants and dividing plant sections into logical groups (e.g. floors in a multi-floor plant).
 A layer has the following properties:
 
 * An _active_ flag, which indicates whether a layer is currently set as the active (drawing) layer.
@@ -303,12 +313,13 @@ A layer has the following properties:
 * A _group_, that the layer is assigned to -- see <<Layer group>>.
   A layer can only be assigned to one layer group at a time.
 * A _group visible_ flag, which indicates whether the layer group the layer is assigned to is shown or hidden -- see <<Layer group>>.
+* A reference to an optional _background image_.
 
 In addition to the properties listed above, layers also have an ordinal number (which is not displayed) that defines the order of the layers in relation to each other.
 The order of the layers is represented by the order of the entries in the "Layers" table in the Model Editor and the Operations Desk clients.
 The topmost entry corresponds to the topmost layer (which is displayed above all other layers) and the bottommost entry corresponds to the bottommost layer (which is displayed below all other layers).
 
-==== Layer group
+===== Layer group
 
 Layer groups are abstract elements that group layers.
 A layer group has the following properties:

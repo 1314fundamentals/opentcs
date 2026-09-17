@@ -256,17 +256,32 @@
   } ],
   "visualLayout" : {
     "name" : "some-visualLayout",
+    "images" : {
+      "some-image-id" : {
+        "data" : "some-data",
+        "id" : "some-image-id",
+        "mediaType" : "some-media-type"
+      }
+    },
     "layerGroups" : [ {
-      "id" : 0,
+      "id" : 3,
       "name" : "layerGroup0",
       "visible" : true
     } ],
     "layers" : [ {
-      "groupId" : 0,
-      "id" : 0,
+      "groupId" : 3,
+      "id" : 1,
       "name" : "layer0",
-      "ordinal" : 0,
-      "visible" : true
+      "ordinal" : 2,
+      "visible" : true,
+      "backgroundImage" : {
+        "imageRef" : "some-image-id",
+        "positionOffset" : {
+          "x" : 100,
+          "y" : 200
+        },
+        "sizeX" : 300
+      }
     } ],
     "properties" : {
       "vLayout-prop" : "vLayout-value"

@@ -21,7 +21,12 @@ This change log lists the most relevant changes for past releases in reverse chr
 == Unreleased
 
 * New features and enhancements:
+** Add support for background images in plant models.
+   Images can now be added to a plant model's visual layout and referenced by layers.
+   Note that support is currently limited to the ability of storing image data in plant model files.
+   Adding images to a plant model and setting them as the background of layers via the Model Editor, as well as displaying these images in the Model Editor / Operations Desk is not yet supported.
 ** Update web API v8 specification and implementation to version 8.1.0:
+*** Extend the endpoints concerned with plant models to support background images in plant models.
 *** Remove superfluous property `sessionId` from the response body of the `POST /v8/login` and `GET /v8/session` endpoints.
 * Bugs fixed:
 ** Avoid a `NullPointerException` in the `GET /v8/userNotifications` endpoint implementation.

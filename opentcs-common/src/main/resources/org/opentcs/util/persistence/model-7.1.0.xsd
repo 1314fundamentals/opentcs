@@ -508,6 +508,10 @@ SPDX-License-Identifier: CC-BY-4.0
                    type="layerGroupType"
                    minOccurs="1"
                    maxOccurs="unbounded"/>
+      <xsd:element name="image"
+                   type="imageType"
+                   minOccurs="0"
+                   maxOccurs="unbounded"/>
       <xsd:element name="property"
                    type="propertyType"
                    minOccurs="0"
@@ -526,6 +530,13 @@ SPDX-License-Identifier: CC-BY-4.0
   </xsd:complexType>
 
   <xsd:complexType name="layerType">
+    <xsd:sequence>
+      <xsd:element name="backgroundImage"
+                   type="imageReferenceType"
+                   minOccurs="0"
+                   maxOccurs="1"/>
+    </xsd:sequence>
+
     <xsd:attribute name="id"
                    type="xsd:int"
                    use="required"/>
@@ -552,6 +563,33 @@ SPDX-License-Identifier: CC-BY-4.0
                    use="required"/>
     <xsd:attribute name="visible"
                    type="xsd:boolean"
+                   use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="imageType">
+    <xsd:attribute name="id"
+                   type="xsd:string"
+                   use="required"/>
+    <xsd:attribute name="mediaType"
+                   type="xsd:string"
+                   use="required"/>
+    <xsd:attribute name="data"
+                   type="xsd:base64Binary"
+                   use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="imageReferenceType">
+    <xsd:attribute name="imageRef"
+                   type="xsd:string"
+                   use="required"/>
+    <xsd:attribute name="positionOffsetX"
+                   type="xsd:long"
+                   use="required"/>
+    <xsd:attribute name="positionOffsetY"
+                   type="xsd:long"
+                   use="required"/>
+    <xsd:attribute name="sizeX"
+                   type="xsd:long"
                    use="required"/>
   </xsd:complexType>
 

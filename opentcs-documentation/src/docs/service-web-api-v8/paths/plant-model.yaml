@@ -783,6 +783,16 @@ components:
           description: The layout's layer groups.
           items:
             $ref: "#/components/schemas/PlantModelLayerGroup"
+        images:
+          type: object
+          description: This layout's pool of images.
+          additionalProperties:
+            $ref: '#/components/schemas/PlantModelImage'
+          example:
+            image-01:
+              id: image-01
+              mediaType: image/png
+              data: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAANSURBVBhXY2BgYPgPAAEEAQBwIGULAAAAAElFTkSuQmCC
         properties:
           type: object
           additionalProperties:
@@ -864,6 +874,8 @@ components:
           type: integer
           description: The ID of the layer group this layer is assigned to.
           example: 0
+        backgroundImage:
+          $ref: '#/components/schemas/PlantModelImageReference'
       required:
         - id
         - ordinal
@@ -889,6 +901,41 @@ components:
         - id
         - name
         - visible
+    PlantModelImage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The image's (unique) ID.
+        mediaType:
+          type: string
+          description: The image's media type (according to the IANA's registry of MIME media types; e.g. `image/png`).
+        data:
+          type: string
+          format: byte
+          description: The image data as a base64-encoded string.
+      required:
+        - id
+        - mediaType
+        - data
+    PlantModelImageReference:
+      type: object
+      properties:
+        imageRef:
+          type: string
+          description: The actual reference to the image (i.e. its ID).
+          example: image-01
+        positionOffset:
+          $ref: '../schemas/common.yaml#/components/schemas/PlantModelCouple'
+        sizeX:
+          type: number
+          format: integer
+          description: The size of the image (in mm) along the plant model's X axis.
+          example: 1000
+      required:
+        - imageRef
+        - positionOffset
+        - sizeX
     TopologyUpdateRequest:
       title: TopologyUpdateRequest
       type: object

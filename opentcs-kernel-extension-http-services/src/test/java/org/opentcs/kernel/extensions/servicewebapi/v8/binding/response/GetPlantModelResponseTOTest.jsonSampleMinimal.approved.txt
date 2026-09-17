@@ -8,6 +8,7 @@
   "properties" : { },
   "vehicles" : [ ],
   "visualLayout" : {
+    "images" : { },
     "layerGroups" : [ ],
     "layers" : [ ],
     "name" : "some-visual-layout",

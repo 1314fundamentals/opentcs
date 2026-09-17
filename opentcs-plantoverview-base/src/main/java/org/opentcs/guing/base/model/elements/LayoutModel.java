@@ -6,6 +6,7 @@ import static org.opentcs.guing.base.I18nPlantOverviewBase.BUNDLE_PATH;
 
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import org.opentcs.guing.base.components.properties.type.ImagesProperty;
 import org.opentcs.guing.base.components.properties.type.KeyValueSetProperty;
 import org.opentcs.guing.base.components.properties.type.LayerGroupsProperty;
 import org.opentcs.guing.base.components.properties.type.LayerWrappersProperty;
@@ -36,6 +37,10 @@ public class LayoutModel
    * The key/name of the 'layer groups' property.
    */
   public static final String LAYER_GROUPS = "layerGroups";
+  /**
+   * The key/name of the 'images' property.
+   */
+  public static final String IMAGES = "images";
   /**
    * This class's resource bundle.
    */
@@ -75,6 +80,10 @@ public class LayoutModel
     return (LayerGroupsProperty) getProperty(LAYER_GROUPS);
   }
 
+  public ImagesProperty getPropertyImages() {
+    return (ImagesProperty) getProperty(IMAGES);
+  }
+
   private void createProperties() {
     StringProperty pName = new StringProperty(this);
     pName.setDescription(bundle.getString("layoutModel.property_name.description"));
@@ -112,5 +121,11 @@ public class LayoutModel
     pLayerGroups.setHelptext(bundle.getString("layoutModel.property_layerGroups.helptext"));
     pLayerGroups.setModellingEditable(false);
     setProperty(LAYER_GROUPS, pLayerGroups);
+
+    ImagesProperty pImages = new ImagesProperty(this, new HashMap<>());
+    pImages.setDescription(bundle.getString("layoutModel.property_images.description"));
+    pImages.setHelptext(bundle.getString("layoutModel.property_images.helptext"));
+    pImages.setModellingEditable(false);
+    setProperty(IMAGES, pImages);
   }
 }

@@ -26,6 +26,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LayerGroup'
+        images:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Image'
       required:
         - name
         - properties
@@ -34,6 +38,7 @@ components:
         - scaleY
         - layers
         - layerGroups
+        - images
     Layer:
       type: object
       properties:
@@ -47,6 +52,8 @@ components:
           type: boolean
         groupId:
           type: integer
+        backgroundImage:
+          $ref: '#/components/schemas/ImageReference'
       required:
         - id
         - ordinal
@@ -66,3 +73,31 @@ components:
         - id
         - name
         - visible
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+        mediaType:
+          type: string
+        data:
+          type: string
+          format: byte
+      required:
+        - id
+        - mediaType
+        - data
+    ImageReference:
+      type: object
+      properties:
+        imageRef:
+          type: string
+        positionOffset:
+          $ref: 'common.yaml#/components/schemas/Couple'
+        sizeX:
+          type: number
+          format: integer
+      required:
+        - imageRef
+        - positionOffset
+        - sizeX

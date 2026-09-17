@@ -36,6 +36,10 @@ public class VisualLayout
    * The layer groups in this model.
    */
   private final List<LayerGroup> layerGroups;
+  /**
+   * This layout's pool of images.
+   */
+  private final Map<String, Image> images;
 
   /**
    * Creates a new VisualLayout.
@@ -48,6 +52,7 @@ public class VisualLayout
     this.scaleY = 50.0;
     this.layers = List.of();
     this.layerGroups = List.of();
+    this.images = Map.of();
   }
 
   /**
@@ -62,13 +67,15 @@ public class VisualLayout
       double scaleX,
       double scaleY,
       List<Layer> layers,
-      List<LayerGroup> layerGroups
+      List<LayerGroup> layerGroups,
+      Map<String, Image> images
   ) {
     super(name, properties, history);
     this.scaleX = scaleX;
     this.scaleY = scaleY;
     this.layers = new ArrayList<>(requireNonNull(layers, "layers"));
     this.layerGroups = new ArrayList<>(requireNonNull(layerGroups, "layerGroups"));
+    this.images = requireNonNull(images, "images");
   }
 
   @Override
@@ -80,7 +87,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -93,7 +101,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -106,7 +115,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -119,7 +129,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -146,7 +157,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -173,7 +185,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -200,7 +213,8 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -227,7 +241,36 @@ public class VisualLayout
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
+    );
+  }
+
+  /**
+   * Returns the images of this layout.
+   *
+   * @return The images of this layout.
+   */
+  public Map<String, Image> getImages() {
+    return images;
+  }
+
+  /**
+   * Creates a copy of this object, with the given images.
+   *
+   * @param images The value to be set in the copy.
+   * @return A copy of this object, differing in the given value.
+   */
+  public VisualLayout withImages(Map<String, Image> images) {
+    return new VisualLayout(
+        getName(),
+        getProperties(),
+        getHistory(),
+        scaleX,
+        scaleY,
+        layers,
+        layerGroups,
+        mapWithoutNullValues(images)
     );
   }
 
@@ -239,6 +282,7 @@ public class VisualLayout
         + ", scaleY=" + scaleY
         + ", layers=" + layers
         + ", layerGroups=" + layerGroups
+        + ", images=" + images
         + ", properties=" + getProperties()
         + ", history=" + getHistory()
         + '}';

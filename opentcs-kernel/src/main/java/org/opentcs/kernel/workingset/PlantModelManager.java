@@ -24,6 +24,8 @@ import org.opentcs.access.to.model.BoundingBoxCreationTO;
 import org.opentcs.access.to.model.CoupleCreationTO;
 import org.opentcs.access.to.model.EnvelopeCreationTO;
 import org.opentcs.access.to.model.EnvironmentalEntityCreationTO;
+import org.opentcs.access.to.model.ImageCreationTO;
+import org.opentcs.access.to.model.ImageReferenceCreationTO;
 import org.opentcs.access.to.model.LayerCreationTO;
 import org.opentcs.access.to.model.LayerGroupCreationTO;
 import org.opentcs.access.to.model.LocationCreationTO;
@@ -61,6 +63,8 @@ import org.opentcs.data.model.TCSResourceReference;
 import org.opentcs.data.model.Triple;
 import org.opentcs.data.model.Vehicle;
 import org.opentcs.data.model.Vehicle.EnergyLevelThresholdSet;
+import org.opentcs.data.model.visualization.Image;
+import org.opentcs.data.model.visualization.ImageReference;
 import org.opentcs.data.model.visualization.Layer;
 import org.opentcs.data.model.visualization.LayerGroup;
 import org.opentcs.data.model.visualization.LocationRepresentation;
@@ -1608,7 +1612,8 @@ public class PlantModelManager
         .withScaleY(layout.getScaleY())
         .withProperties(layout.getProperties())
         .withLayers(toLayerCreationTOs(layout.getLayers()))
-        .withLayerGroups(toLayerGroupCreationTOs(layout.getLayerGroups()));
+        .withLayerGroups(toLayerGroupCreationTOs(layout.getLayerGroups()))
+        .withImages(toImageTOs(layout.getImages()));
   }
 
   /**
@@ -1628,6 +1633,7 @@ public class PlantModelManager
         .withScaleY(to.getScaleY())
         .withLayers(toLayers(to.getLayers()))
         .withLayerGroups(toLayerGroups(to.getLayerGroups()))
+        .withImages(toImages(to.getImages()))
         .withProperties(to.getProperties());
 
     getObjectRepo().addObject(newLayout);
@@ -1998,6 +2004,7 @@ public class PlantModelManager
               layer.getName(),
               layer.getGroupId()
           )
+              .withBackgroundImage(toImageReferenceTO(layer.getBackgroundImage()))
       );
     }
 
@@ -2016,6 +2023,7 @@ public class PlantModelManager
               layerCreationTO.getName(),
               layerCreationTO.getGroupId()
           )
+              .withBackgroundImage(toImageReference(layerCreationTO.getBackgroundImage()))
       );
     }
 
@@ -2040,6 +2048,35 @@ public class PlantModelManager
     return result;
   }
 
+  private Map<String, ImageCreationTO> toImageTOs(Map<String, Image> images) {
+    return images.values().stream()
+        .collect(
+            Collectors.toMap(
+                Image::getId,
+                image -> new ImageCreationTO(
+                    image.getId(),
+                    image.getMediaType(),
+                    image.getData()
+                )
+            )
+        );
+  }
+
+  private ImageReferenceCreationTO toImageReferenceTO(ImageReference imageReference) {
+    if (imageReference == null) {
+      return null;
+    }
+
+    return new ImageReferenceCreationTO(
+        imageReference.getImageRef(),
+        new CoupleCreationTO(
+            imageReference.getPositionOffset().getX(),
+            imageReference.getPositionOffset().getY()
+        ),
+        imageReference.getSizeX()
+    );
+  }
+
   private List<LayerGroup> toLayerGroups(
       List<LayerGroupCreationTO> layerGroupCreationTOs
   ) {
@@ -2056,6 +2093,35 @@ public class PlantModelManager
     }
 
     return result;
+  }
+
+  private Map<String, Image> toImages(Map<String, ImageCreationTO> images) {
+    return images.values().stream()
+        .collect(
+            Collectors.toMap(
+                ImageCreationTO::getId,
+                image -> new Image(
+                    image.getId(),
+                    image.getMediaType(),
+                    image.getData()
+                )
+            )
+        );
+  }
+
+  private ImageReference toImageReference(ImageReferenceCreationTO imageReference) {
+    if (imageReference == null) {
+      return null;
+    }
+
+    return new ImageReference(
+        imageReference.getImageRef(),
+        new Couple(
+            imageReference.getPositionOffset().getX(),
+            imageReference.getPositionOffset().getY()
+        ),
+        imageReference.getSizeX()
+    );
   }
 
   private Map<String, EnvelopeCreationTO> toEnvelopeCreationTOMap(

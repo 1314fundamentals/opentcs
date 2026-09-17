@@ -45,6 +45,7 @@ class GetPlantModelResponseTOTest {
                 .setScaleY(3.4)
                 .setLayers(List.of())
                 .setLayerGroups(List.of())
+                .setImages(Map.of())
         );
   }
 }

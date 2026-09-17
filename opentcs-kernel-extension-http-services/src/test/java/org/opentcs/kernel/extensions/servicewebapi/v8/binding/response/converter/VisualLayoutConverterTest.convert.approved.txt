@@ -1,14 +1,36 @@
 {
+  "images" : {
+    "image-id-1" : {
+      "data" : "data-1",
+      "id" : "image-id-1",
+      "mediaType" : "media-type-1"
+    }
+  },
   "layerGroups" : [ {
     "id" : 4,
     "name" : "layer-group-1",
     "visible" : true
   } ],
   "layers" : [ {
+    "backgroundImage" : {
+      "imageRef" : "image-id-1",
+      "positionOffset" : {
+        "x" : 12,
+        "y" : 34
+      },
+      "sizeX" : 56
+    },
     "groupId" : 3,
     "id" : 1,
     "name" : "layer-1",
     "ordinal" : 2,
+    "visible" : true
+  }, {
+    "backgroundImage" : null,
+    "groupId" : 4,
+    "id" : 2,
+    "name" : "layer-2",
+    "ordinal" : 3,
     "visible" : true
   } ],
   "name" : "visual-layout-1",

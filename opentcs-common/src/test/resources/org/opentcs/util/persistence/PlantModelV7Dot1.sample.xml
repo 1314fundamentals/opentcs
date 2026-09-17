@@ -153,11 +153,14 @@
         <blockLayout color="#3333FF"/>
     </block>
     <visualLayout name="VLayout" scaleX="50.0" scaleY="50.0">
-        <layer id="0" ordinal="0" visible="true" name="Default layer" groupId="0"/>
+        <layer id="0" ordinal="0" visible="true" name="Default layer" groupId="0">
+          <backgroundImage imageRef="opentcs-icon" positionOffsetX="10000" positionOffsetY="5000" sizeX="300"/>
+        </layer>
         <layer id="1" ordinal="1" visible="true" name="Layer 1" groupId="0"/>
         <layer id="2" ordinal="2" visible="false" name="Layer 2" groupId="1"/>
         <layerGroup id="0" name="Default layer group" visible="true"/>
         <layerGroup id="1" name="Group 1" visible="false"/>
+        <image id="opentcs-icon" mediaType="image/png" data="iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA3gAAAN4B3eqDagAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAH6SURBVDiNpZM/SyNRFMV/mRlYthEi2EQhTYJ+ANF8ABsLsdNCLOwCIoKg4CcQFBYJERVWFtzOYkBE0dJGUlgoUYySQgv/22SQzITkzdliNOuixbp7unMf99x7z+HFJH0DsoDF5xAC32OSqsDXTza/wrcAy/d9CoUCvu9Tq9W4uLigWCwSBAEA19fXnJycAHB+fs7T0xPFYhHAsgAWFhZwHIe5uTk8zyOXy3F4eEg+n+fy8hLXdXFdl6OjI7a3t9nZ2WF9fZ1qtYpljKHRaNDd3Y0kjDGk02lGR0epVCqUSiUeHx/p6OjAcRwABgYGSCaTeJ4Xs2zbJpVKsbKyQjqdxrZtyuUyy8vL9PX1kclkaGlpIQxD6vX6exckBZIUhqEk6eHhQYuLi03+ikajoQ8QxCQFwJdXQWMMnucRj8f/JoWaAzA8DDc3cH8PiYRNIhFnbQ1WV+HgAE5PYXYWenpgchI8D9rbYWPjzQmuK42N/d4tm5WWliRjIl6vS7290v5+xF/qQVNgaEja24sed3elwcH3B09PS62t0sxMJNgUeH6WkslmUbmcNDHxkWfS2ZnU1iaVSpGAA7C1Bf398BIzXV0wPx9xx4GpKRgfjzy4u4OREejsfBNjuSzd3v45qVKRNjejScZIx8eRT1dX72P878/0A9A/NAv4+QtjFMOWHt2SzQAAAABJRU5ErkJggg=="/>
         <property name="vl-key" value="vl-value"/>
     </visualLayout>
     <property name="tcs:modelFileLastModified" value="2024-11-21T14:01:30Z"/>

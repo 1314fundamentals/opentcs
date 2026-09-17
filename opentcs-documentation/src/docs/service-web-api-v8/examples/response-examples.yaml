@@ -309,12 +309,23 @@ exampleModelElements:
       timestamp: '2026-02-20T14:34:11.865365800Z'
     transportOrder:
   visualLayout: &visualLayout
+    images:
+      image1:
+        id: 'image1'
+        mediaType: 'image/png'
+        data: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAANSURBVBhXY2BgYPgPAAEEAQBwIGULAAAAAElFTkSuQmCC'
     layerGroups:
       - id: 0
         name: Default layer group
         visible: true
     layers:
-      - groupId: 0
+      - backgroundImage:
+          imageRef: 'image1'
+          positionOffset:
+            x: 0
+            y: 0
+          sizeX: 1000
+        groupId: 0
         id: 0
         name: Default layer
         ordinal: 0

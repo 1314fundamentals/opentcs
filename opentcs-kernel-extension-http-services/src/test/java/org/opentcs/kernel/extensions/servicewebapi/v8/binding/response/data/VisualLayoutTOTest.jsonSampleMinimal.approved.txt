@@ -1,4 +1,5 @@
 {
+  "images" : { },
   "layerGroups" : [ ],
   "layers" : [ ],
   "name" : "some-visual-layout",

@@ -5,6 +5,7 @@ package org.opentcs.util.persistence.v7;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.opentcs.access.to.model.BlockCreationTO;
 import org.opentcs.access.to.model.BoundingBoxCreationTO;
 import org.opentcs.access.to.model.CoupleCreationTO;
 import org.opentcs.access.to.model.EnvelopeCreationTO;
+import org.opentcs.access.to.model.ImageCreationTO;
+import org.opentcs.access.to.model.ImageReferenceCreationTO;
 import org.opentcs.access.to.model.LayerCreationTO;
 import org.opentcs.access.to.model.LayerGroupCreationTO;
 import org.opentcs.access.to.model.LocationCreationTO;
@@ -287,6 +290,7 @@ public class V7TOMapper {
         .withScaleY(visualLayout.getScaleY())
         .withLayers(convertLayers(visualLayout.getLayers()))
         .withLayerGroups(convertLayerGroups(visualLayout.getLayerGroups()))
+        .withImages(convertImages(visualLayout.getImages()))
         .withProperties(convertProperties(visualLayout.getProperties()));
   }
 
@@ -302,6 +306,7 @@ public class V7TOMapper {
               layer.getName(),
               layer.getGroupId()
           )
+              .withBackgroundImage(convertImageReference(layer.getBackgroundImage()))
       );
     }
 
@@ -324,6 +329,35 @@ public class V7TOMapper {
     }
 
     return result;
+  }
+
+  private Map<String, ImageCreationTO> convertImages(List<ImageTO> images) {
+    return images.stream()
+        .collect(
+            Collectors.toMap(
+                ImageTO::getId,
+                image -> new ImageCreationTO(
+                    image.getId(),
+                    image.getMediaType(),
+                    image.getData()
+                )
+            )
+        );
+  }
+
+  private ImageReferenceCreationTO convertImageReference(ImageReferenceTO imageReference) {
+    if (imageReference == null) {
+      return null;
+    }
+
+    return new ImageReferenceCreationTO(
+        imageReference.getImageRef(),
+        new CoupleCreationTO(
+            imageReference.getPositionOffsetX(),
+            imageReference.getPositionOffsetY()
+        ),
+        imageReference.getSizeX()
+    );
   }
 
   private Map<String, String> convertProperties(List<PropertyTO> propsList) {
@@ -586,7 +620,8 @@ public class V7TOMapper {
     result.setScaleX((float) layout.getScaleX())
         .setScaleY((float) layout.getScaleY())
         .setLayers(toLayerTOs(layout.getLayers()))
-        .setLayerGroups(toLayerGroupTOs(layout.getLayerGroups()));
+        .setLayerGroups(toLayerGroupTOs(layout.getLayerGroups()))
+        .setImages(toImageTOs(layout.getImages()));
 
     return result;
   }
@@ -602,6 +637,7 @@ public class V7TOMapper {
               .setVisible(layer.isVisible())
               .setName(layer.getName())
               .setGroupId(layer.getGroupId())
+              .setBackgroundImage(toImageReferenceTO(layer.getBackgroundImage()))
       );
     }
 
@@ -621,6 +657,30 @@ public class V7TOMapper {
     }
 
     return result;
+  }
+
+  private List<ImageTO> toImageTOs(Map<String, ImageCreationTO> images) {
+    return images.entrySet().stream()
+        .map(
+            entry -> new ImageTO()
+                .setId(entry.getKey())
+                .setMediaType(entry.getValue().getMediaType())
+                .setData(entry.getValue().getData())
+        )
+        .sorted(Comparator.comparing(ImageTO::getId))
+        .toList();
+  }
+
+  private ImageReferenceTO toImageReferenceTO(ImageReferenceCreationTO imageReference) {
+    if (imageReference == null) {
+      return null;
+    }
+
+    return new ImageReferenceTO()
+        .setImageRef(imageReference.getImageRef())
+        .setPositionOffsetX(imageReference.getPositionOffset().getX())
+        .setPositionOffsetY(imageReference.getPositionOffset().getY())
+        .setSizeX(imageReference.getSizeX());
   }
 
   private List<PointTO.OutgoingPath> getOutgoingPaths(

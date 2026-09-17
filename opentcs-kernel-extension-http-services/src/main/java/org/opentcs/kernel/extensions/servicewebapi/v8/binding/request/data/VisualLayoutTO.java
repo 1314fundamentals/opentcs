@@ -32,6 +32,28 @@ public class VisualLayoutTO {
   private List<LayerTO> layers = List.of(new LayerTO(0, 0, true, "layer0", 0));
   private List<LayerGroupTO> layerGroups = List.of(new LayerGroupTO(0, "layerGroup0", true));
   @JsonPropertyOrder(alphabetic = true)
+  private Map<String, ImageTO> images = Map.of();
+  @JsonPropertyOrder(alphabetic = true)
   private Map<String, String> properties = Map.of();
+
+  @RequiredArgsConstructor
+  @Getter
+  @Setter
+  @EqualsAndHashCode
+  @ToString
+  @Accessors(chain = true)
+  @JsonPropertyOrder(alphabetic = true)
+  public static class ImageTO {
+
+    @Nonnull
+    @JsonProperty(value = "id", required = true)
+    private final String id;
+    @Nonnull
+    @JsonProperty(value = "mediaType", required = true)
+    private final String mediaType;
+    @Nonnull
+    @JsonProperty(value = "data", required = true)
+    private final String data;
+  }
 }
 // CHECKSTYLE:ON

@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import org.opentcs.access.to.model.BlockCreationTO;
 import org.opentcs.access.to.model.CoupleCreationTO;
 import org.opentcs.access.to.model.EnvelopeCreationTO;
+import org.opentcs.access.to.model.ImageCreationTO;
+import org.opentcs.access.to.model.ImageReferenceCreationTO;
 import org.opentcs.access.to.model.LayerCreationTO;
 import org.opentcs.access.to.model.LayerGroupCreationTO;
 import org.opentcs.access.to.model.LocationCreationTO;
@@ -23,6 +25,7 @@ import org.opentcs.access.to.model.VehicleCreationTO;
 import org.opentcs.access.to.model.VisualLayoutCreationTO;
 import org.opentcs.access.to.peripherals.PeripheralOperationCreationTO;
 import org.opentcs.data.model.Couple;
+import org.opentcs.data.model.visualization.ImageReference;
 import org.opentcs.data.model.visualization.Layer;
 import org.opentcs.data.model.visualization.LayerGroup;
 import org.opentcs.data.model.visualization.LocationRepresentation;
@@ -35,6 +38,7 @@ import org.opentcs.guing.base.components.properties.type.SpeedProperty;
 import org.opentcs.guing.base.model.BoundingBoxModel;
 import org.opentcs.guing.base.model.EnergyLevelThresholdSetModel;
 import org.opentcs.guing.base.model.EnvelopeModel;
+import org.opentcs.guing.base.model.ImageModel;
 import org.opentcs.guing.base.model.PeripheralOperationModel;
 import org.opentcs.guing.base.model.elements.BlockModel;
 import org.opentcs.guing.base.model.elements.LayoutModel;
@@ -374,6 +378,7 @@ public class PlantModelElementConverter {
     model.getPropertyScaleY().setValueAndUnit(layoutTO.getScaleY(), LengthProperty.Unit.MM);
     initLayerGroups(model, layoutTO.getLayerGroups());
     initLayers(model, layoutTO.getLayers());
+    initImages(model, layoutTO.getImages());
 
     for (Map.Entry<String, String> property : layoutTO.getProperties().entrySet()) {
       model.getPropertyMiscellaneous().addItem(
@@ -453,10 +458,41 @@ public class PlantModelElementConverter {
                   layerCreationTO.isVisible(),
                   layerCreationTO.getName(),
                   layerCreationTO.getGroupId()
-              ),
+              )
+                  .withBackgroundImage(mapImageReference(layerCreationTO.getBackgroundImage())),
               layerGroups.get(layerCreationTO.getGroupId())
           )
       );
     }
+  }
+
+  private void initImages(LayoutModel model, Map<String, ImageCreationTO> images) {
+    Map<String, ImageModel> imageMap = model.getPropertyImages().getValue();
+    imageMap.clear();
+    images.values().forEach(
+        image -> imageMap.put(
+            image.getId(),
+            new ImageModel(
+                image.getId(),
+                image.getMediaType(),
+                image.getData()
+            )
+        )
+    );
+  }
+
+  private ImageReference mapImageReference(ImageReferenceCreationTO imageReference) {
+    if (imageReference == null) {
+      return null;
+    }
+
+    return new ImageReference(
+        imageReference.getImageRef(),
+        new Couple(
+            imageReference.getPositionOffset().getX(),
+            imageReference.getPositionOffset().getY()
+        ),
+        imageReference.getSizeX()
+    );
   }
 }

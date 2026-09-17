@@ -5,6 +5,7 @@ package org.opentcs.util.persistence.v7;
 import static java.util.Objects.requireNonNull;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(propOrder = {"name", "scaleX", "scaleY", "layers", "layerGroups", "properties"})
+@XmlType(propOrder = {"name", "scaleX", "scaleY", "layers", "layerGroups", "images", "properties"})
 public class VisualLayoutTO
     extends
       PlantModelElementTO {
@@ -25,6 +26,7 @@ public class VisualLayoutTO
   private Float scaleY = 0.0F;
   private List<Layer> layers = new ArrayList<>();
   private List<LayerGroup> layerGroups = new ArrayList<>();
+  private List<ImageTO> images = new ArrayList<>();
 
   /**
    * Creates a new instance.
@@ -86,8 +88,21 @@ public class VisualLayoutTO
     return this;
   }
 
+  @XmlElement(name = "image")
+  public List<ImageTO> getImages() {
+    return images;
+  }
+
+  public VisualLayoutTO setImages(
+      @Nonnull
+      List<ImageTO> images
+  ) {
+    this.images = requireNonNull(images, "images");
+    return this;
+  }
+
   @XmlAccessorType(XmlAccessType.PROPERTY)
-  @XmlType(propOrder = {"id", "ordinal", "visible", "name", "groupId"})
+  @XmlType(propOrder = {"id", "ordinal", "visible", "name", "groupId", "backgroundImage"})
   public static class Layer {
 
     private Integer id = 0;
@@ -95,6 +110,7 @@ public class VisualLayoutTO
     private Boolean visible = true;
     private String name = "";
     private Integer groupId = 0;
+    private ImageReferenceTO backgroundImage;
 
     /**
      * Creates a new instance.
@@ -149,6 +165,20 @@ public class VisualLayoutTO
 
     public Layer setGroupId(Integer groupId) {
       this.groupId = requireNonNull(groupId, "groupId");
+      return this;
+    }
+
+    @XmlElement
+    @Nullable
+    public ImageReferenceTO getBackgroundImage() {
+      return backgroundImage;
+    }
+
+    public Layer setBackgroundImage(
+        @Nullable
+        ImageReferenceTO backgroundImage
+    ) {
+      this.backgroundImage = backgroundImage;
       return this;
     }
   }

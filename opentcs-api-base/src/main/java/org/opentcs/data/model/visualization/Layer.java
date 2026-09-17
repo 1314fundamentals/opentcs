@@ -4,6 +4,8 @@ package org.opentcs.data.model.visualization;
 
 import static java.util.Objects.requireNonNull;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.Serializable;
 
 /**
@@ -34,6 +36,10 @@ public class Layer
    * The ID of the layer group this layer is assigned to.
    */
   private final int groupId;
+  /**
+   * The reference to this layer's background image.
+   */
+  private final ImageReference backgroundImage;
 
   /**
    * Creates a new instance.
@@ -44,18 +50,39 @@ public class Layer
    * @param name The name of the layer.
    * @param groupId The ID of the layer group the layer is assigned to.
    */
-  public Layer(int id, int ordinal, boolean visible, String name, int groupId) {
+  public Layer(
+      int id,
+      int ordinal,
+      boolean visible,
+      @Nonnull
+      String name,
+      int groupId
+  ) {
+    this(id, ordinal, visible, name, groupId, null);
+  }
+
+  private Layer(
+      int id,
+      int ordinal,
+      boolean visible,
+      @Nonnull
+      String name,
+      int groupId,
+      @Nullable
+      ImageReference backgroundImage
+  ) {
     this.id = id;
     this.ordinal = ordinal;
     this.visible = visible;
     this.name = requireNonNull(name, "name");
     this.groupId = groupId;
+    this.backgroundImage = backgroundImage;
   }
 
   /**
    * Returns the unique ID of this layer.
    *
-   * @return The unique Id of this layer.
+   * @return The unique ID of this layer.
    */
   public int getId() {
     return id;
@@ -78,7 +105,7 @@ public class Layer
    * @return A copy of this object, differing in the given value.
    */
   public Layer withOrdinal(int ordinal) {
-    return new Layer(id, ordinal, visible, name, groupId);
+    return new Layer(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   /**
@@ -97,7 +124,7 @@ public class Layer
    * @return A copy of this object, differing in the given value.
    */
   public Layer withVisible(boolean visible) {
-    return new Layer(id, ordinal, visible, name, groupId);
+    return new Layer(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   /**
@@ -115,8 +142,11 @@ public class Layer
    * @param name The value to be set in the copy.
    * @return A copy of this object, differing in the given value.
    */
-  public Layer withName(String name) {
-    return new Layer(id, ordinal, visible, name, groupId);
+  public Layer withName(
+      @Nonnull
+      String name
+  ) {
+    return new Layer(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   /**
@@ -135,7 +165,30 @@ public class Layer
    * @return A copy of this object, differing in the given value.
    */
   public Layer withGroupId(int groupId) {
-    return new Layer(id, ordinal, visible, name, groupId);
+    return new Layer(id, ordinal, visible, name, groupId, backgroundImage);
+  }
+
+  /**
+   * Returns the reference to this layer's background image.
+   *
+   * @return The reference to this layer's background image.
+   */
+  @Nullable
+  public ImageReference getBackgroundImage() {
+    return backgroundImage;
+  }
+
+  /**
+   * Creates a copy of this object, with the given background image.
+   *
+   * @param backgroundImage The value to be set in the copy.
+   * @return A copy of this object, differing in the given value.
+   */
+  public Layer withBackgroundImage(
+      @Nullable
+      ImageReference backgroundImage
+  ) {
+    return new Layer(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   @Override
@@ -145,6 +198,8 @@ public class Layer
         + "ordinal=" + ordinal + ", "
         + "visible=" + visible + ", "
         + "name=" + name + ", "
-        + "groupId=" + groupId + '}';
+        + "groupId=" + groupId + ", "
+        + "backgroundImage=" + backgroundImage
+        + '}';
   }
 }

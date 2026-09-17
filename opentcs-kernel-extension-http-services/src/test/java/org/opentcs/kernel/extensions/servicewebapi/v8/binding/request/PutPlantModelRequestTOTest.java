@@ -205,8 +205,25 @@ class PutPlantModelRequestTOTest {
                 .setProperties(Map.of("vLayout-prop", "vLayout-value"))
                 .setScaleX(65)
                 .setScaleY(65)
-                .setLayers(List.of(new LayerTO(0, 0, true, "layer0", 0)))
-                .setLayerGroups(List.of(new LayerGroupTO(0, "layerGroup0", true)))
+                .setLayers(
+                    List.of(
+                        new LayerTO(1, 2, true, "layer0", 3)
+                            .setBackgroundImage(
+                                new LayerTO.ImageReferenceTO(
+                                    "some-image-id",
+                                    new CoupleTO(100, 200),
+                                    300
+                                )
+                            )
+                    )
+                )
+                .setLayerGroups(List.of(new LayerGroupTO(3, "layerGroup0", true)))
+                .setImages(
+                    Map.of(
+                        "some-image-id",
+                        new VisualLayoutTO.ImageTO("some-image-id", "some-media-type", "some-data")
+                    )
+                )
         )
         .setProperties(new TreeMap<>(Map.of("plantModel-prop", "value")));
 

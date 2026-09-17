@@ -1,14 +1,36 @@
 {
+  "images" : {
+    "some-id" : {
+      "data" : "some-data",
+      "id" : "some-id",
+      "mediaType" : "some-media-type"
+    }
+  },
   "layerGroups" : [ {
-    "id" : 8,
+    "id" : 14,
     "name" : "some-layer-group",
     "visible" : true
   } ],
   "layers" : [ {
+    "backgroundImage" : {
+      "imageRef" : "some-id",
+      "positionOffset" : {
+        "x" : 8,
+        "y" : 9
+      },
+      "sizeX" : 10
+    },
     "groupId" : 7,
     "id" : 5,
     "name" : "some-layer",
     "ordinal" : 6,
+    "visible" : true
+  }, {
+    "backgroundImage" : null,
+    "groupId" : 13,
+    "id" : 11,
+    "name" : "some-other-layer",
+    "ordinal" : 12,
     "visible" : true
   } ],
   "name" : "some-visual-layout",

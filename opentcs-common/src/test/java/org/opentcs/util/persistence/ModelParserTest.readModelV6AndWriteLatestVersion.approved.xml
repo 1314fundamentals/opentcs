@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model version="7.0.0" name="PlantModelV6">
+<model version="7.1.0" name="PlantModelV6">
     <point name="Point-0001" positionX="5000" positionY="5000" positionZ="0" vehicleOrientationAngle="NaN" type="HALT_POSITION">
         <maxVehicleBoundingBox length="1000" width="1000" height="1000" referenceOffsetX="0" referenceOffsetY="0"/>
         <outgoingPath name="Point-0001 --- Point-0002"/>

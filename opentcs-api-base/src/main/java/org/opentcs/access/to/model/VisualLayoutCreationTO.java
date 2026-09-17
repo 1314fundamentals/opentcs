@@ -36,6 +36,10 @@ public class VisualLayoutCreationTO
    * The layout's layer groups.
    */
   private final List<LayerGroupCreationTO> layerGroups;
+  /**
+   * The layout's pool of images.
+   */
+  private final Map<String, ImageCreationTO> images;
 
   /**
    * Creates a new instance.
@@ -52,6 +56,7 @@ public class VisualLayoutCreationTO
     this.scaleY = 50.0;
     this.layers = List.of();
     this.layerGroups = List.of();
+    this.images = Map.of();
   }
 
   private VisualLayoutCreationTO(
@@ -64,13 +69,16 @@ public class VisualLayoutCreationTO
       @Nonnull
       List<LayerCreationTO> layers,
       @Nonnull
-      List<LayerGroupCreationTO> layerGroups
+      List<LayerGroupCreationTO> layerGroups,
+      @Nonnull
+      Map<String, ImageCreationTO> images
   ) {
     super(name, properties);
     this.scaleX = scaleX;
     this.scaleY = scaleY;
     this.layers = requireNonNull(layers, "layers");
     this.layerGroups = requireNonNull(layerGroups, "layerGroups");
+    this.images = requireNonNull(images, "images");
   }
 
   /**
@@ -90,7 +98,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -111,7 +120,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -138,7 +148,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -164,7 +175,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -190,7 +202,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -220,7 +233,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -240,7 +254,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         listWithAppendix(layers, layer),
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -270,7 +285,8 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        layerGroups
+        layerGroups,
+        images
     );
   }
 
@@ -290,7 +306,38 @@ public class VisualLayoutCreationTO
         scaleX,
         scaleY,
         layers,
-        listWithAppendix(layerGroups, layerGroup)
+        listWithAppendix(layerGroups, layerGroup),
+        images
+    );
+  }
+
+  /**
+   * Returns the layout's pool of images.
+   *
+   * @return The layout's pool of images.
+   */
+  public Map<String, ImageCreationTO> getImages() {
+    return images;
+  }
+
+  /**
+   * Creates a copy of this object, with the given images.
+   *
+   * @param images The value to be set in the copy.
+   * @return A copy of this object, differing in the given value.
+   */
+  public VisualLayoutCreationTO withImages(
+      @Nonnull
+      Map<String, ImageCreationTO> images
+  ) {
+    return new VisualLayoutCreationTO(
+        getName(),
+        getModifiableProperties(),
+        scaleX,
+        scaleY,
+        layers,
+        layerGroups,
+        Collections.unmodifiableMap(images)
     );
   }
 
@@ -302,6 +349,7 @@ public class VisualLayoutCreationTO
         + ", scaleY=" + scaleY
         + ", layers=" + layers
         + ", layerGroups=" + layerGroups
+        + ", images=" + images
         + ", properties=" + getProperties()
         + '}';
   }

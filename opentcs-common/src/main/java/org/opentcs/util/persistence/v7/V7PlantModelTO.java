@@ -42,7 +42,7 @@ public class V7PlantModelTO
   /**
    * This plant model implementation's version string.
    */
-  public static final String VERSION_STRING = "7.0.0";
+  public static final String VERSION_STRING = "7.1.0";
 
   private String name = "";
   private List<PointTO> points = new ArrayList<>();
@@ -253,7 +253,7 @@ public class V7PlantModelTO
   private static Schema createSchema()
       throws SAXException {
     URL schemaUrl
-        = V7PlantModelTO.class.getResource("/org/opentcs/util/persistence/model-7.0.0.xsd");
+        = V7PlantModelTO.class.getResource("/org/opentcs/util/persistence/model-7.1.0.xsd");
     SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     return schemaFactory.newSchema(schemaUrl);
   }

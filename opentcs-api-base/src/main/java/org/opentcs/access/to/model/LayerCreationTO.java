@@ -5,6 +5,7 @@ package org.opentcs.access.to.model;
 import static java.util.Objects.requireNonNull;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.Serializable;
 
 /**
@@ -35,6 +36,10 @@ public class LayerCreationTO
    * The ID of the layer group this layer is assigned to.
    */
   private final int groupId;
+  /**
+   * The reference to this layer's background image.
+   */
+  private final ImageReferenceCreationTO backgroundImage;
 
   /**
    * Creates a new instance.
@@ -53,17 +58,31 @@ public class LayerCreationTO
       String name,
       int groupId
   ) {
+    this(id, ordinal, visible, name, groupId, null);
+  }
+
+  private LayerCreationTO(
+      int id,
+      int ordinal,
+      boolean visible,
+      @Nonnull
+      String name,
+      int groupId,
+      @Nullable
+      ImageReferenceCreationTO backgroundImage
+  ) {
     this.id = id;
     this.ordinal = ordinal;
     this.visible = visible;
     this.name = requireNonNull(name, "name");
     this.groupId = groupId;
+    this.backgroundImage = backgroundImage;
   }
 
   /**
    * Returns the unique ID of this layer.
    *
-   * @return The unique Id of this layer.
+   * @return The unique ID of this layer.
    */
   public int getId() {
     return id;
@@ -86,7 +105,7 @@ public class LayerCreationTO
    * @return A copy of this object, differing in the given value.
    */
   public LayerCreationTO withOrdinal(int ordinal) {
-    return new LayerCreationTO(id, ordinal, visible, name, groupId);
+    return new LayerCreationTO(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   /**
@@ -105,7 +124,7 @@ public class LayerCreationTO
    * @return A copy of this object, differing in the given value.
    */
   public LayerCreationTO withVisible(boolean visible) {
-    return new LayerCreationTO(id, ordinal, visible, name, groupId);
+    return new LayerCreationTO(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   /**
@@ -124,7 +143,7 @@ public class LayerCreationTO
    * @return A copy of this object, differing in the given value.
    */
   public LayerCreationTO withName(String name) {
-    return new LayerCreationTO(id, ordinal, visible, name, groupId);
+    return new LayerCreationTO(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   /**
@@ -143,7 +162,30 @@ public class LayerCreationTO
    * @return A copy of this object, differing in the given value.
    */
   public LayerCreationTO withGroupId(int groupId) {
-    return new LayerCreationTO(id, ordinal, visible, name, groupId);
+    return new LayerCreationTO(id, ordinal, visible, name, groupId, backgroundImage);
+  }
+
+  /**
+   * Returns the reference to this layer's background image.
+   *
+   * @return The reference to this layer's background image.
+   */
+  @Nullable
+  public ImageReferenceCreationTO getBackgroundImage() {
+    return backgroundImage;
+  }
+
+  /**
+   * Creates a copy of this object, with the given background image.
+   *
+   * @param backgroundImage The value to be set in the copy.
+   * @return A copy of this object, differing in the given value.
+   */
+  public LayerCreationTO withBackgroundImage(
+      @Nullable
+      ImageReferenceCreationTO backgroundImage
+  ) {
+    return new LayerCreationTO(id, ordinal, visible, name, groupId, backgroundImage);
   }
 
   @Override
@@ -153,6 +195,8 @@ public class LayerCreationTO
         + "ordinal=" + ordinal + ", "
         + "visible=" + visible + ", "
         + "name=" + name + ", "
-        + "groupId=" + groupId + '}';
+        + "groupId=" + groupId + ", "
+        + "backgroundImage=" + backgroundImage
+        + '}';
   }
 }

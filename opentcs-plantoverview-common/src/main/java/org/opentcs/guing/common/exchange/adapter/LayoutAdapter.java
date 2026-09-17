@@ -9,17 +9,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.opentcs.access.to.model.CoupleCreationTO;
+import org.opentcs.access.to.model.ImageCreationTO;
+import org.opentcs.access.to.model.ImageReferenceCreationTO;
 import org.opentcs.access.to.model.LayerCreationTO;
 import org.opentcs.access.to.model.LayerGroupCreationTO;
 import org.opentcs.access.to.model.PlantModelCreationTO;
 import org.opentcs.access.to.model.VisualLayoutCreationTO;
 import org.opentcs.components.kernel.services.TCSObjectService;
 import org.opentcs.data.TCSObject;
+import org.opentcs.data.model.visualization.Image;
 import org.opentcs.data.model.visualization.Layer;
 import org.opentcs.data.model.visualization.LayerGroup;
 import org.opentcs.data.model.visualization.VisualLayout;
 import org.opentcs.guing.base.components.layer.LayerWrapper;
 import org.opentcs.guing.base.components.properties.type.LengthProperty;
+import org.opentcs.guing.base.model.ImageModel;
 import org.opentcs.guing.base.model.ModelComponent;
 import org.opentcs.guing.base.model.elements.LayoutModel;
 import org.opentcs.guing.common.model.SystemModel;
@@ -67,6 +72,8 @@ public class LayoutAdapter
       initLayers(model, layout.getLayers());
       model.getPropertyLayerWrappers().markChanged();
 
+      initImages(model, layout.getImages());
+
       updateMiscModelProperties(model, layout);
     }
     catch (IllegalArgumentException e) {
@@ -87,6 +94,7 @@ public class LayoutAdapter
             .withProperties(getKernelProperties(modelComponent))
             .withLayers(getLayers((LayoutModel) modelComponent))
             .withLayerGroups(getLayerGroups((LayoutModel) modelComponent))
+            .withImages(getImages((LayoutModel) modelComponent))
     );
   }
 
@@ -111,6 +119,21 @@ public class LayoutAdapter
     }
   }
 
+  private void initImages(LayoutModel model, Map<String, Image> images) {
+    Map<String, ImageModel> imageMap = model.getPropertyImages().getValue();
+    imageMap.clear();
+    images.forEach((imageId, image) -> {
+      imageMap.put(
+          image.getId(),
+          new ImageModel(
+              image.getId(),
+              image.getMediaType(),
+              image.getData()
+          )
+      );
+    });
+  }
+
   private double getScaleX(LayoutModel model) {
     return model.getPropertyScaleX().getValueByUnit(LengthProperty.Unit.MM);
   }
@@ -131,6 +154,7 @@ public class LayoutAdapter
                 layer.getName(),
                 layer.getGroupId()
             )
+                .withBackgroundImage(getImageReference(layer))
         )
         .collect(Collectors.toList());
   }
@@ -142,5 +166,34 @@ public class LayoutAdapter
             group -> new LayerGroupCreationTO(group.getId(), group.getName(), group.isVisible())
         )
         .collect(Collectors.toList());
+  }
+
+  private Map<String, ImageCreationTO> getImages(LayoutModel model) {
+    return model.getPropertyImages().getValue().values().stream()
+        .collect(
+            Collectors.toMap(
+                ImageModel::getId,
+                imageModel -> new ImageCreationTO(
+                    imageModel.getId(),
+                    imageModel.getMediaType(),
+                    imageModel.getData()
+                )
+            )
+        );
+  }
+
+  private ImageReferenceCreationTO getImageReference(Layer layer) {
+    if (layer.getBackgroundImage() == null) {
+      return null;
+    }
+
+    return new ImageReferenceCreationTO(
+        layer.getBackgroundImage().getImageRef(),
+        new CoupleCreationTO(
+            layer.getBackgroundImage().getPositionOffset().getX(),
+            layer.getBackgroundImage().getPositionOffset().getY()
+        ),
+        layer.getBackgroundImage().getSizeX()
+    );
   }
 }
